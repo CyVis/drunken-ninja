@@ -6,20 +6,15 @@
 
 package cyvis;
 
-import java.io.IOException;
-import static java.lang.System.out;
-import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author HOME
+ * @Description: Class Scans through the computer's network devices and adds them to a list in the networkingInfo class. 
+ * 		Name may be confusing. Will change on next Commit. 
  */
 public class Scanning 
 {
