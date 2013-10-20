@@ -142,7 +142,7 @@ public class ScanNetworkForDevices implements Runnable
 			
 			
 			byte[] ip = localhost.getAddress();
-			for (int i = 63; i < 255; i++) {
+			for (int i = 0; i < 255; i++) {
 //				System.out.println("Checking on subaddress: " + i + " with timeout: " + timeout)  ;
 				checkAddress ca = new checkAddress(timeout, ip, i, networkDevices);
 				Thread t = new Thread(ca) ;
