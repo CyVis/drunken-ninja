@@ -6,7 +6,9 @@
 
 package cyvis;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -19,6 +21,11 @@ public class NetworkDevice
 	public Date dateResolved ;
 	public Date lastSeen ; 
 	public String ip ; 
+	List openPorts = null ; 
+
+	public NetworkDevice() { 
+		openPorts = new ArrayList<>() ; 
+	}
 
 	public void initMembers(String hostname, String address, Date date, String ip) { 
 		this.hostname = hostname ; 

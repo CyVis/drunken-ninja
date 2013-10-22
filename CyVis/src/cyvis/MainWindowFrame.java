@@ -7,7 +7,6 @@
 package cyvis;
 
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
@@ -18,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.text.html.ListView;
 
 
 /**
@@ -237,8 +235,8 @@ public final class MainWindowFrame extends javax.swing.JFrame {
                                         .addComponent(jLabel1)
                                         .addComponent(addr_label))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
                 );
@@ -262,7 +260,19 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 			int index = deviceList.locationToIndex(evt.getPoint()) ; 
 			DefaultListModel dlm = (DefaultListModel) deviceList.getModel(); 
 			String s = (String) dlm.get(index) ; 
+			
+
 			updateNotifications(s);
+		
+			for (int i = 0 ; i < networkingInfo.networkDevices.size(); i++) { 
+				NetworkDevice d = (NetworkDevice) networkingInfo.networkDevices.get(i);
+				String identifier = d.hostname + ", " + d.address; 
+				if (s.equals(identifier)) { // Then this is the device we just clicked on
+					for (int j = 0 ; j < d.openPorts.size(); j++) { 
+						updateNotifications(d.openPorts.get(i).toString()); 
+					}
+				}
+			}
 
 		}
         }//GEN-LAST:event_deviceListMouseClicked

@@ -8,6 +8,8 @@ package cyvis;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,7 +33,9 @@ public class ScanNetworkForDevices implements Runnable
 	
 	
 	
-	
+	// Class that gets created as a thread to check to see if the address is reachable. 
+	// Caller: Parent class
+	// Calls: Port Scanner
 	private class checkAddress implements Runnable  {
 		
 		public NetworkDevice addressExists(String address) {
@@ -60,17 +64,20 @@ public class ScanNetworkForDevices implements Runnable
 		int i ;
 		List networkDevices ;
 		
+		
 		public checkAddress(int timeout, byte[] ip, int i, List networkDevices) {
 			this.timeout = timeout ;
 			this.ip = ip ;
 			this.i = i ;
 			this.networkDevices = networkDevices ;
 		}
+
+
 		
+		// Checks the address to see if it can be reached
 		@Override
-		public void run()
+		public void run() 
 		{
-//			for (inti = 0; i < 255; i++)
 			{
 			ip[3] = (byte)i;
 			InetAddress address = null;
@@ -90,7 +97,6 @@ public class ScanNetworkForDevices implements Runnable
 				}
 				else if (!address.getHostAddress().equals(address.getHostName()))
 				{
-					//System.out.println("Name is......"+address.getHostName()+"\tIP is......."+address.getHostAddress() + " w/ timeout " + timeout);
 					NetworkDevice hostname = hostnameExists(address.getHostName());
 					NetworkDevice hostAddress = addressExists(address.getHostAddress());
 					if (hostname == hostAddress && hostname != null && hostAddress != null) {  // They will be null if they do not exist in the list
@@ -102,8 +108,13 @@ public class ScanNetworkForDevices implements Runnable
 						d.dateResolved = new Date() ;
 						d.lastSeen = new Date() ;
 						d.ip = address.getHostAddress() ;
-						d.address = address.getHostAddress() ; 
+						d.address = address.getHostAddress() ;
 						networkDevices.add(d);
+
+						PortScanner p = new PortScanner(d.address,timeout,d); 
+						Thread t = new Thread(p) ; 
+						t.start();
+
 						System.out.println("Device " + d.hostname + " @ " + d.address + " added to array") ;
 						
 					}
@@ -118,9 +129,53 @@ public class ScanNetworkForDevices implements Runnable
 		}
 		}
 		
+		// Basic port scanning. Implement more advanced version in next iteration. http://nmap.org/nmap_doc.html
+		private class PortScanner implements Runnable{  
+			String address = "" ; 
+			int timeout = 0 ; 
+			NetworkDevice d ; 
+			public PortScanner(String address, int timeout, NetworkDevice d){ 
+				this.address = address; 
+				this.timeout = timeout ; 
+				this.d = d ; 
+			}
+
+			@Override
+			public void run()
+			{
+					for (int i = 0 ; i < 65536; i++) { 
+						System.out.println("Trying scan on " + address + ":" + i) ; 
+						try (Socket socket = new Socket())
+						{
+							socket.connect(new InetSocketAddress(address, i), timeout); 
+							System.out.println("Adding port " + i + " to address " + address) ; 
+							boolean exists = false ; 
+							for (int j = 0 ;j < d.openPorts.size(); j++) {  // For some reason "contains(...)" function not working
+								int val = (int) d.openPorts.get(j); 
+								if (val == i) { 
+									exists = true ;
+									break ; 
+								} 
+							}
+							if (exists = false) d.openPorts.add(i); 
+						}
+						catch (IOException ex) { } 
+					}
+			}
+
+
+
+			
+		}
+
+
+
+
 	}
 	
 	
+	 // Iterates through the range of IP addresses and creates another thread to test the connection
+	// This is the runnable method for the ScanNetworkDevices class
 	
 	public void run()
 	{
