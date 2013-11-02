@@ -12,14 +12,17 @@ package cyvis;
  */
 public class BaseIPAddrSelection extends javax.swing.JFrame
 {
-	public String baseIP = "" ; 
+	public static String baseIP = "" ; 
 
 	/**
 	 * Creates new form BaseIPAddrSelection
+	 * @param currentAddress
 	 */
-	public BaseIPAddrSelection()
+	public BaseIPAddrSelection(String currentAddress)
 	{
 		initComponents();
+		baseIP = currentAddress; 
+		baseIP_textField.setText(currentAddress); 
 	}
 
 	/**
@@ -142,7 +145,8 @@ public class BaseIPAddrSelection extends javax.swing.JFrame
 		{
 			public void run()
 			{
-				new BaseIPAddrSelection().setVisible(true);
+//				new BaseIPAddrSelection().setVisible(true);
+				new BaseIPAddrSelection(baseIP).setVisible(true ); 
 			}
 		});
 	}

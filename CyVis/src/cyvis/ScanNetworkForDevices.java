@@ -24,14 +24,17 @@ import java.util.logging.Logger;
 public class ScanNetworkForDevices implements Runnable
 {
 	List networkDevices ;
+	NetworkingInfo networkingInfo ; 
 	
-	ScanNetworkForDevices(List networkDevices)
+	
+//	ScanNetworkForDevices(List networkDevices)
+	ScanNetworkForDevices(NetworkingInfo ni)
 	{
-		this.networkDevices = networkDevices ; // networkDevices is initialized in the MainWindowFrame class
+		this.networkingInfo = ni ; 
+
+		this.networkDevices = networkingInfo.networkDevices ; // networkDevices is initialized in the MainWindowFrame class
+		
 	}
-	
-	
-	
 	
 	// Class that gets created as a thread to check to see if the address is reachable. 
 	// Caller: Parent class
@@ -73,8 +76,7 @@ public class ScanNetworkForDevices implements Runnable
 		}
 
 
-		
-		// Checks the address to see if it can be reached
+		// Description: Checks the address to see if it can be reached
 		@Override
 		public void run() 
 		{
@@ -84,7 +86,7 @@ public class ScanNetworkForDevices implements Runnable
 			try
 			{
 				address = InetAddress.getByAddress(ip);
-//				System.out.println("Address: " + address) ;
+				System.out.println("Address: " + address) ;
 			} catch (UnknownHostException ex)
 			{
 //				Logger.getLogger(MainWindowFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,7 +100,9 @@ public class ScanNetworkForDevices implements Runnable
 				else if (!address.getHostAddress().equals(address.getHostName()))
 				{
 					NetworkDevice hostname = hostnameExists(address.getHostName());
+
 					NetworkDevice hostAddress = addressExists(address.getHostAddress());
+
 					if (hostname == hostAddress && hostname != null && hostAddress != null) {  // They will be null if they do not exist in the list
 						hostname.lastSeen = new Date();
 					}
@@ -111,9 +115,9 @@ public class ScanNetworkForDevices implements Runnable
 						d.address = address.getHostAddress() ;
 						networkDevices.add(d);
 
-						PortScanner p = new PortScanner(d.address,timeout,d); 
-						Thread t = new Thread(p) ; 
-						t.start();
+						//PortScanner p = new PortScanner(d.address,timeout,d); 
+						//Thread t = new Thread(p) ; 
+						//t.start();
 
 						System.out.println("Device " + d.hostname + " @ " + d.address + " added to array") ;
 						
@@ -144,7 +148,7 @@ public class ScanNetworkForDevices implements Runnable
 			public void run()
 			{
 					for (int i = 0 ; i < 65536; i++) { 
-						System.out.println("Trying scan on " + address + ":" + i) ; 
+						System.out.println("Trying Port Scan on " + address + ":" + i) ; 
 						try (Socket socket = new Socket())
 						{
 							socket.connect(new InetSocketAddress(address, i), timeout); 
@@ -157,7 +161,7 @@ public class ScanNetworkForDevices implements Runnable
 									break ; 
 								} 
 							}
-							if (exists = false) d.openPorts.add(i); 
+							if (exists == false) d.openPorts.add(i); 
 						}
 						catch (IOException ex) { } 
 					}
@@ -176,29 +180,34 @@ public class ScanNetworkForDevices implements Runnable
 	
 	 // Iterates through the range of IP addresses and creates another thread to test the connection
 	// This is the runnable method for the ScanNetworkDevices class
-	
+	@Override
 	public void run()
 	{
 		boolean running = true ;
 		
 		while(running)  {
 			int timeout = 100 ;
+			int delay = 30 ; // Tells the thread how much to wait before calling another address. Lowering this value too much will DoS your network
 			List<Thread> threads = new ArrayList<>() ;
 			
 			InetAddress localhost ;
 			localhost = null;
 			try
 			{
-				localhost = InetAddress.getLocalHost() ;
+				localhost = InetAddress.getByName(networkingInfo.ipv4_address) ; 
+				System.out.println("localhost: " + localhost); 
 			} catch (UnknownHostException ex)
 			{
 //				Logger.getLogger(MainWindowFrame.class.getName()).log(Level.SEVERE, null, ex);
 			}
+
+			
 			
 			
 			byte[] ip = localhost.getAddress();
+			
 			for (int i = 0; i < 255; i++) {
-//				System.out.println("Checking on subaddress: " + i + " with timeout: " + timeout)  ;
+				System.out.println("Checking on subaddress: " + i + " with timeout: " + timeout)  ;
 				checkAddress ca = new checkAddress(timeout, ip, i, networkDevices);
 				Thread t = new Thread(ca) ;
 				t.start() ;
@@ -206,27 +215,33 @@ public class ScanNetworkForDevices implements Runnable
 				
 				try
 				{
-					Thread.sleep(500);
+					Thread.sleep(delay);
 				} catch (InterruptedException ex)
 				{
 //					Logger.getLogger(ScanNetworkForDevices.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
+
+			timeout += timeout ;
+			System.out.println("Done iterating through addresses. Attempting Thread joins") ; 
 			
 			try
 			{
-				for (int i = 0; i < threads.size(); i++) {
+				for (int i = 0; i < threads.size(); i++) { //TODO
 					Thread t = threads.get(i) ;
-					t.join(100);
+					t.join(100); // There is a bug here. All threads should be stopped at this point, yet the following line sometimes displays true
+					//System.out.println("t.alive = " + t.isAlive()) ; 
 				}
 			} catch (InterruptedException ex)
 			{
 //				Logger.getLogger(ScanNetworkForDevices.class.getName()).log(Level.SEVERE, null, ex);
 			}
 			
-			timeout += timeout ;
 //			if (timeout >= 1000) timeout = 10 ;
-			if (timeout >= 1000) running = false;
+			if (timeout >= 1000) { 
+				running = false;
+				System.out.println("Ran through full sweep. Stopping for dev. purposes") ; 
+			}
 		}
 	}
 }

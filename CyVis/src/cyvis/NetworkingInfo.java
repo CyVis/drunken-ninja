@@ -20,6 +20,8 @@ import java.util.List;
 public class NetworkingInfo
 {
 	public String baseIP = "192.168.1" ; 
+	public String ipv4_address, ipv6_address ; 
+	public String hostname; 
 	ArrayList<NetworkInterface> interfaces = new ArrayList<>(); 
 	public NetworkInterface activeInterface ; 
 	List networkDevices = null ; 
@@ -55,12 +57,41 @@ public class NetworkingInfo
 		}
 		out.printf("\n") ; 
 	}
-	public NetworkInterface setDefaultInterface(String name) 
+	public NetworkInterface setDefaultInterface(String name)
 	{ 
 		for (NetworkInterface ni : interfaces) 
 		{ 
+			
 			if (ni.getDisplayName().equals(name)) { 
 				activeInterface = ni; 
+				// Need to parse interface to get correct address - since it has many 
+				Enumeration<InetAddress> inetAddresses = ni.getInetAddresses();  // For said interface, get all addresses
+
+				int count = 0 ; 
+				for (InetAddress inetAddress : Collections.list(inetAddresses)) { 
+					String s = inetAddress.getHostAddress(); 
+					System.out.println("[" + s.toString() + "]");
+					if (count == 0) ipv4_address = s ; 
+					if (count == 1) ipv6_address = s ; 
+					count++ ; 
+				}
+
+				System.out.println("Setting " + ni.getDisplayName() + " to active device.\n" + "\tIPV4: " + ipv4_address + "\n\tIPV6: " + ipv6_address) ; 
+
+				String strip = "" ; 
+				int num_dots = 0 ; 
+				for (int i = 0 ; i < ipv4_address.length() ; i++) { 
+					if (ipv4_address.charAt(i) == '.') { 
+						num_dots++ ; 
+					}
+
+					if (num_dots < 3) { 
+						strip += ipv4_address.charAt(i) ; 
+					}
+				}
+				baseIP = strip ; 
+				System.out.println("New baseIP: " + baseIP) ; 
+				
 				out.print("Setting " + ni.getDisplayName() + " to default connection\n") ; 
 				return ni ; 
 			}

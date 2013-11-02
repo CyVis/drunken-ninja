@@ -44,6 +44,7 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 			{
 				networkingInfo.baseIP = selectionWindow.getBaseIP();
 				selectionWindow.dispose();
+				updateNotifications("New IP: " + networkingInfo.baseIP) ; 
 				
 				System.out.println(networkingInfo.baseIP) ;
 				
@@ -77,7 +78,6 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 		scan.getNetInterfacesAndScan();
 		addItemsToConnectionMenu() ; 
 		networkingInfo.printInterfaces(true, false) ; 
-		startScanningThread();
 		updateList() ; 
 
 
@@ -87,7 +87,7 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 
 	
 	private void startScanningThread() { 
-		snd = new ScanNetworkForDevices(networkingInfo.networkDevices); 
+		snd = new ScanNetworkForDevices(networkingInfo); 
 		Thread t = new Thread(snd) ; 
 		t.start(); 
 	}
@@ -158,6 +158,7 @@ public final class MainWindowFrame extends javax.swing.JFrame {
                 notifications = new javax.swing.JTextArea();
                 jScrollPane2 = new javax.swing.JScrollPane();
                 deviceList = new javax.swing.JList();
+                scanButton = new javax.swing.JButton();
                 jMenuBar1 = new javax.swing.JMenuBar();
                 menuBar = new javax.swing.JMenu();
                 jMenu2 = new javax.swing.JMenu();
@@ -186,6 +187,15 @@ public final class MainWindowFrame extends javax.swing.JFrame {
                         }
                 });
                 jScrollPane2.setViewportView(deviceList);
+
+                scanButton.setText("Start Scan");
+                scanButton.addActionListener(new java.awt.event.ActionListener()
+                {
+                        public void actionPerformed(java.awt.event.ActionEvent evt)
+                        {
+                                scanButtonActionPerformed(evt);
+                        }
+                });
 
                 menuBar.setText("File");
                 jMenuBar1.add(menuBar);
@@ -223,7 +233,8 @@ public final class MainWindowFrame extends javax.swing.JFrame {
                                                                 .addComponent(jLabel1)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                                 .addComponent(addr_label, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 327, Short.MAX_VALUE))))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
+                                                                .addComponent(scanButton))))
                                         .addComponent(jScrollPane2))
                                 .addContainerGap())
                 );
@@ -233,10 +244,11 @@ public final class MainWindowFrame extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel1)
-                                        .addComponent(addr_label))
+                                        .addComponent(addr_label)
+                                        .addComponent(scanButton))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
                 );
@@ -247,7 +259,10 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 	// Opens the class that allows the user to change the base IP. This is to easily accomidate for different gateway addresses
         private void defaultIPBaseAddrActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_defaultIPBaseAddrActionPerformed
         {//GEN-HEADEREND:event_defaultIPBaseAddrActionPerformed
-		selectionWindow = new BaseIPAddrSelection() ; 
+
+		updateNotifications(networkingInfo.baseIP) ; 
+		selectionWindow = new BaseIPAddrSelection(networkingInfo.baseIP) ; 
+
 		selectionWindow.select_button.addActionListener(BaseIPAction);
 		selectionWindow.setLocationRelativeTo(null);
 		selectionWindow.setVisible(true); 
@@ -276,6 +291,12 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 
 		}
         }//GEN-LAST:event_deviceListMouseClicked
+
+        private void scanButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_scanButtonActionPerformed
+        {//GEN-HEADEREND:event_scanButtonActionPerformed
+                // TODO add your handling code here:
+		startScanningThread();
+        }//GEN-LAST:event_scanButtonActionPerformed
 
 
 	// Nothing to see here, really...
@@ -307,16 +328,18 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 
 	// Scans through the devices saved in the NetworkingInfo class and puts them in a menu. Makes it where you can select an item and change the active connection
 	public void addItemsToConnectionMenu() { 
-		for (NetworkInterface ni : networkingInfo.interfaces) { 
+		for (NetworkInterface ni : networkingInfo.interfaces) {  // For each networking device, loop through it and get the different addresses
+
 			JCheckBoxMenuItem jcbi = new JCheckBoxMenuItem() ; 		
 			String text = "" ; 
 			text += ni.getDisplayName() + ", " ; 
-			Enumeration<InetAddress> inetAddresses = ni.getInetAddresses(); 
+
+			Enumeration<InetAddress> inetAddresses = ni.getInetAddresses();  // For said interface, get all addresses
 
 			for (InetAddress inetAddress : Collections.list(inetAddresses)) { 
 				String s = inetAddress.toString() ; 
 				String s2 ; 
-				s2 = s.replace("/", "") ; 
+				s2 = s.replace("/", "") ;  // Ip address starts with a '/' - not sure why
 				
 				text += s2 ; 
 				jcbi.setText(text);
@@ -356,5 +379,6 @@ public final class MainWindowFrame extends javax.swing.JFrame {
         private javax.swing.JScrollPane jScrollPane2;
         public javax.swing.JMenu menuBar;
         public javax.swing.JTextArea notifications;
+        private javax.swing.JButton scanButton;
         // End of variables declaration//GEN-END:variables
 }
