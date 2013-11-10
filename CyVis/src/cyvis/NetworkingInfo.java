@@ -22,12 +22,22 @@ public class NetworkingInfo
 	public String baseIP = "192.168.1" ; 
 	public String ipv4_address, ipv6_address ; 
 	public String hostname; 
+	public boolean use_ipv4 = true ; 
+	public boolean use_ipv6 = false ; 
 	ArrayList<NetworkInterface> interfaces = new ArrayList<>(); 
 	public NetworkInterface activeInterface ; 
 	List networkDevices = null ; 
 
 	public NetworkingInfo() { 
 		networkDevices = new ArrayList<>() ; 
+	}
+	public void setIPV4Active() { 
+		use_ipv4 = true ; 
+		use_ipv6 = false ; 
+	}
+	public void setIPV6Active() { 
+		use_ipv4 = false ; 
+		use_ipv6 = true ; 
 	}
 	
 
@@ -57,7 +67,7 @@ public class NetworkingInfo
 		}
 		out.printf("\n") ; 
 	}
-	public NetworkInterface setDefaultInterface(String name)
+	public NetworkInterface setDefaultInterface(String name) // Only works for IPv4
 	{ 
 		for (NetworkInterface ni : interfaces) 
 		{ 

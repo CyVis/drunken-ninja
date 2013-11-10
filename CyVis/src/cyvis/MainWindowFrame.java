@@ -164,6 +164,9 @@ public final class MainWindowFrame extends javax.swing.JFrame {
                 jMenu2 = new javax.swing.JMenu();
                 defaultIPBaseAddr = new javax.swing.JMenuItem();
                 defaultConnectionJMenu = new javax.swing.JMenu();
+                jMenu1 = new javax.swing.JMenu();
+                ipv4_menuItem = new javax.swing.JMenuItem();
+                ipv6_menuItem = new javax.swing.JMenuItem();
 
                 jMenuItem1.setText("jMenuItem1");
 
@@ -216,6 +219,30 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 
                 defaultConnectionJMenu.setLabel("Default Connections");
                 jMenuBar1.add(defaultConnectionJMenu);
+
+                jMenu1.setText("IP Version");
+
+                ipv4_menuItem.setText("IPv4");
+                ipv4_menuItem.addActionListener(new java.awt.event.ActionListener()
+                {
+                        public void actionPerformed(java.awt.event.ActionEvent evt)
+                        {
+                                ipv4_menuItemActionPerformed(evt);
+                        }
+                });
+                jMenu1.add(ipv4_menuItem);
+
+                ipv6_menuItem.setText("IPv6");
+                ipv6_menuItem.addActionListener(new java.awt.event.ActionListener()
+                {
+                        public void actionPerformed(java.awt.event.ActionEvent evt)
+                        {
+                                ipv6_menuItemActionPerformed(evt);
+                        }
+                });
+                jMenu1.add(ipv6_menuItem);
+
+                jMenuBar1.add(jMenu1);
 
                 setJMenuBar(jMenuBar1);
 
@@ -298,6 +325,24 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 		startScanningThread();
         }//GEN-LAST:event_scanButtonActionPerformed
 
+        private void ipv4_menuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ipv4_menuItemActionPerformed
+        {//GEN-HEADEREND:event_ipv4_menuItemActionPerformed
+                // TODO add your handling code here:
+		updateNotifications("Clicked on IPV4 setter") ; 
+		networkingInfo.setIPV4Active();
+		ipv4_menuItem.setSelected(true);
+		ipv6_menuItem.setSelected(false) ; 
+        }//GEN-LAST:event_ipv4_menuItemActionPerformed
+
+        private void ipv6_menuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ipv6_menuItemActionPerformed
+        {//GEN-HEADEREND:event_ipv6_menuItemActionPerformed
+                // TODO add your handling code here:
+		updateNotifications("Clicked on IPV6 setter") ; 
+		networkingInfo.setIPV6Active();
+		ipv4_menuItem.setSelected(false);
+		ipv6_menuItem.setSelected(true) ; 
+        }//GEN-LAST:event_ipv6_menuItemActionPerformed
+
 
 	// Nothing to see here, really...
 	public static void main(String args[]) {
@@ -371,7 +416,10 @@ public final class MainWindowFrame extends javax.swing.JFrame {
         public javax.swing.JMenu defaultConnectionJMenu;
         private javax.swing.JMenuItem defaultIPBaseAddr;
         private javax.swing.JList deviceList;
+        private javax.swing.JMenuItem ipv4_menuItem;
+        private javax.swing.JMenuItem ipv6_menuItem;
         private javax.swing.JLabel jLabel1;
+        private javax.swing.JMenu jMenu1;
         private javax.swing.JMenu jMenu2;
         private javax.swing.JMenuBar jMenuBar1;
         private javax.swing.JMenuItem jMenuItem1;

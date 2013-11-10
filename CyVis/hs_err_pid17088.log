@@ -1,0 +1,81 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffebeaa000a, pid=17088, tid=13388
+#
+# JRE version: Java(TM) SE Runtime Environment (7.0_45-b18) (build 1.7.0_45-b18)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (24.45-b08 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# 
+[error occurred during error reporting (printing problematic frame), id 0xc0000005]
+
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000000002734000):  JavaThread "Thread-10" [_thread_in_native, id=13388, stack(0x0000000016bd0000,0x0000000016cd0000)]
+
+siginfo: ExceptionCode=0xc0000005, writing address 0x00007ffebeaa2008
+
+Registers:
+RAX=0x0000000000000028, RBX=0x00000000000011d0, RCX=0x00000000000011d0, RDX=0x0000000000000004
+RSP=0x0000000016cceba8, RBP=0x0000000000000001, RSI=0x0000000000000000, RDI=0x0000000000000000
+R8 =0x0000000016ccebf0, R9 =0x0000000000000002, R10=0x00007ffebeaa1f94, R11=0x000000000000003e
+R12=0x0000000000000000, R13=0x000000073ba5c1c0, R14=0x0000000016cced00, R15=0x0000000002734000
+RIP=0x00007ffebeaa000a, EFLAGS=0x0000000000010212
+
+Top of Stack: (sp=0x0000000016cceba8)
+0x0000000016cceba8:   00007fff3bfe17f1 0000000700000000
+0x0000000016ccebb8:   0000000000000000 0000000700000000
+0x0000000016ccebc8:   0000000000000001 0000000000000000
+0x0000000016ccebd8:   0000000000000000 0000000000000000
+0x0000000016ccebe8:   00000000505953d5 000000073ba5c1c8
+0x0000000016ccebf8:   00000000000011d0 0000000016ccecd8
+0x0000000016ccec08:   00000000027341e8 000000073ba5c1c8
+0x0000000016ccec18:   00000000505980df 0000000016ccec88
+0x0000000016ccec28:   00000000027460f8 00000007c009af98
+0x0000000016ccec38:   00000000027460f8 00000007c009afe8
+0x0000000016ccec48:   0000000016ccec48 0000000000000000
+0x0000000016ccec58:   0000000002752af0 000000073ba5c1c8
+0x0000000016ccec68:   00000000e761e45f 0000000700000000
+0x0000000016ccec78:   0000000000000000 0000000016ccec98
+0x0000000016ccec88:   0000000016ccece0 00000000027460f8
+0x0000000016ccec98:   0000000016ccec98 0000000000000000 
+
+Instructions: (pc=0x00007ffebeaa000a)
+0x00007ffebea9ffea:   
+[error occurred during error reporting (printing registers, top of stack, instructions near pc), id 0xc0000005]
+
+Register to memory mapping:
+
+RAX=0x0000000000000028 is an unknown value
+RBX=0x00000000000011d0 is an unknown value
+RCX=0x00000000000011d0 is an unknown value
+RDX=0x0000000000000004 is an unknown value
+RSP=0x0000000016cceba8 is pointing into the stack for thread: 0x0000000002734000
+RBP=0x0000000000000001 is an unknown value
+RSI=0x0000000000000000 is an unknown value
+RDI=0x0000000000000000 is an unknown value
+R8 =0x0000000016ccebf0 is pointing into the stack for thread: 0x0000000002734000
+R9 =0x0000000000000002 is an unknown value
+R10=0x00007ffebeaa1f94 is an unknown value
+R11=0x000000000000003e is an unknown value
+R12=0x0000000000000000 is an unknown value
+R13=0x000000073ba5c1c0 is pointing into object: 0x000000073ba5c180
+{constMethod} 
+ - klass: {other class}
+ - constants:       0x000000073ba5a9d8 constant pool [199] for 'java/net/DualStackPlainSocketImpl' cache=0x000000073ba5d3f0
+R14=0x0000000016cced00 is pointing into the stack for thread: 0x0000000002734000
+R15=0x0000000002734000 is a thread
+
+
+Stack: [0x0000000016bd0000,0x0000000016cd0000],  sp=0x0000000016cceba8,  free space=1018k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+
+[error occurred during error reporting (printing native stack), id 0xc0000005]

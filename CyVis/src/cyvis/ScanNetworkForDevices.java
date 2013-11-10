@@ -86,7 +86,7 @@ public class ScanNetworkForDevices implements Runnable
 			try
 			{
 				address = InetAddress.getByAddress(ip);
-				System.out.println("Address: " + address) ;
+//				System.out.println("Address: " + address) ;
 			} catch (UnknownHostException ex)
 			{
 //				Logger.getLogger(MainWindowFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -100,7 +100,6 @@ public class ScanNetworkForDevices implements Runnable
 				else if (!address.getHostAddress().equals(address.getHostName()))
 				{
 					NetworkDevice hostname = hostnameExists(address.getHostName());
-
 					NetworkDevice hostAddress = addressExists(address.getHostAddress());
 
 					if (hostname == hostAddress && hostname != null && hostAddress != null) {  // They will be null if they do not exist in the list
@@ -115,9 +114,9 @@ public class ScanNetworkForDevices implements Runnable
 						d.address = address.getHostAddress() ;
 						networkDevices.add(d);
 
-						//PortScanner p = new PortScanner(d.address,timeout,d); 
-						//Thread t = new Thread(p) ; 
-						//t.start();
+						PortScanner p = new PortScanner(d.address,timeout,d); 
+						Thread t = new Thread(p) ; 
+						t.start();
 
 						System.out.println("Device " + d.hostname + " @ " + d.address + " added to array") ;
 						
@@ -147,13 +146,16 @@ public class ScanNetworkForDevices implements Runnable
 			@Override
 			public void run()
 			{
+				timeout = 10 ; 
+			//	System.out.println("Port scan initiated on address: " + address) ; 
 					for (int i = 0 ; i < 65536; i++) { 
-						System.out.println("Trying Port Scan on " + address + ":" + i) ; 
+						//System.out.println("Trying Port Scan on " + address + ":" + i) ; 
 						try (Socket socket = new Socket())
 						{
 							socket.connect(new InetSocketAddress(address, i), timeout); 
 							System.out.println("Adding port " + i + " to address " + address) ; 
 							boolean exists = false ; 
+
 							for (int j = 0 ;j < d.openPorts.size(); j++) {  // For some reason "contains(...)" function not working
 								int val = (int) d.openPorts.get(j); 
 								if (val == i) { 
@@ -161,7 +163,10 @@ public class ScanNetworkForDevices implements Runnable
 									break ; 
 								} 
 							}
-							if (exists == false) d.openPorts.add(i); 
+							if (exists == false) { 
+								d.openPorts.add(i); // Cross-threading error happening here. 
+								System.out.println("Found open port on " + address + "adding port: " + i) ; 
+							} 
 						}
 						catch (IOException ex) { } 
 					}
@@ -184,9 +189,9 @@ public class ScanNetworkForDevices implements Runnable
 	public void run()
 	{
 		boolean running = true ;
+		int timeout = 100 ;
 		
 		while(running)  {
-			int timeout = 100 ;
 			int delay = 30 ; // Tells the thread how much to wait before calling another address. Lowering this value too much will DoS your network
 			List<Thread> threads = new ArrayList<>() ;
 			
@@ -207,7 +212,7 @@ public class ScanNetworkForDevices implements Runnable
 			byte[] ip = localhost.getAddress();
 			
 			for (int i = 0; i < 255; i++) {
-				System.out.println("Checking on subaddress: " + i + " with timeout: " + timeout)  ;
+				//System.out.println("Checking on subaddress: " + i + " with timeout: " + timeout)  ;
 				checkAddress ca = new checkAddress(timeout, ip, i, networkDevices);
 				Thread t = new Thread(ca) ;
 				t.start() ;
@@ -237,7 +242,7 @@ public class ScanNetworkForDevices implements Runnable
 //				Logger.getLogger(ScanNetworkForDevices.class.getName()).log(Level.SEVERE, null, ex);
 			}
 			
-//			if (timeout >= 1000) timeout = 10 ;
+			if (timeout >= 1000) timeout += timeout ;
 			if (timeout >= 1000) { 
 				running = false;
 				System.out.println("Ran through full sweep. Stopping for dev. purposes") ; 
