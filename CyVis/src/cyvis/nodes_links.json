@@ -1,0 +1,62 @@
+{
+  "nodes":[
+	{ "Address":"192.168.1.68",
+	  "Open_Ports":3,
+	  "Ports":"1 | 2 | 3",
+	  "Services":"s1 | s2 | s3",
+	  "OS":"windows"
+	},
+	{ "Address":"192.168.1.69",
+	  "OpenPorts":1,
+	  "Ports":"0",
+	  "Services":"s0",
+	  "OS":"linux"
+	},
+	{ "Address":"192.168.1.70",
+	  "OpenPorts":7,
+	  "Ports":"1 | 2 | 3 | 4 | 5 | 6 | 7",
+	  "Services":"s1 | s2 | s3 | s4 | s5 | s6 | s7",
+	  "OS":"macintosh"
+	},
+	{ "Address":"192.168.1.71",
+	  "OpenPorts":4,
+	  "Ports":"1 | 2 | 7 | 9",
+	  "Services":"s1 | s2 | s7 | s9",
+	  "OS":"windows"
+	},
+	{ "Address":"192.168.1.72",
+	  "OpenPorts":4,
+	  "Ports":"1 | 2 | 7 | 9",
+	  "Services":"s1 | s2 | s7 | s9",
+	  "OS":"windows"
+	},
+	{ "Address":"192.168.1.73",
+	  "OpenPorts":4,
+	  "Ports":"1 | 2 | 7 | 9",
+	  "Services":"s1 | s2 | s7 | s9",
+	  "OS":"macintosh"
+	},
+	{ "Address":"192.168.1.74",
+	  "OpenPorts":4,
+	  "Ports":"6 | 11 | 20 | 99",
+	  "Services":"s6 | s11 | s20 | s99",
+	  "OS":"linux"
+	},
+	{ "Address":"192.168.1.75",
+	  "OpenPorts":4,
+	  "Ports":"1 | 2 | 7 | 9",
+	  "Services":"s1 | s2 | s7 | s9",
+	  "OS":"linux"
+	}
+
+  ],
+  "links":[
+    {"source":1,"target":0,"vulnerability":30},
+    {"source":2,"target":0,"vulnerability":150}, 
+    {"source":3,"target":0,"vulnerability":50},
+    {"source":4,"target":3,"vulnerability":80}, 
+    {"source":5,"target":3,"vulnerability":10}, 
+    {"source":6,"target":0,"vulnerability":10}, 
+    {"source":7,"target":2,"vulnerability":70} 
+  ]
+}
