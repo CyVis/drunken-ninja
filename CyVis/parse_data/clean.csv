@@ -1,0 +1,15 @@
+service,cve_count,risk
+Adobe Acrobat,0,0.000000
+Windows XP,81,0.476471
+PostgreSQL,8,0.047059
+Mac OS X,156,0.917647
+Firefox,141,0.829412
+Drupal,70,0.411765
+MySQL,61,0.358824
+Joomla,12,0.070588
+Internet Explorer,127,0.747059
+Adobe Reader,65,0.382353
+Outlook Express,0,0.000000
+Windows NT,0,0.000000
+SQL Server,27,0.158824
+Chrome,170,1.000000
