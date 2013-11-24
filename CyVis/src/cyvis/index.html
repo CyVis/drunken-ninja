@@ -88,6 +88,7 @@ a {
   stroke-opacity: .6;
 }
 div.bigtip {
+  visibility: hidden;
   position: absolute;           
   text-align: center;           
   width: 200px;                  
@@ -102,8 +103,7 @@ div.bigtip {
   pointer-events: none;         
 }
 
-div.tooltip {
-  visibility: hidden;
+div.tooltip {   
   position: absolute;           
   text-align: center;           
   width: 100px;                  
@@ -198,7 +198,7 @@ div.tooltip {
 												d.Address + "<br/>" + 
 												d.OS + "<br/>"
 									
-											)
+											)  
 										.style("left", (d3.event.pageX) + "px")     
 										.style("top", (d3.event.pageY - 28) + "px");    
 								})                  
@@ -208,11 +208,15 @@ div.tooltip {
 										.style("opacity", 0);   
 								})
 								.on("dblclick",function(d){
-								//stuff... maybe undo the "click" stuff
-									bigtip.transition()
+								//stuff... maybe undo the "click"
+									tip.transition()
 										.duration(200)
+										.style("opacity", 1)
+									bigtip.transition()
+										.duration(2000)
 										.style("opacity", 0)
 										.style("visibility", "hidden");
+
 								})
 								.on("click", function(d) {
 									tip.transition()
@@ -233,7 +237,7 @@ div.tooltip {
 										.style("top", (d3.event.pageY - 38) + "px");    
 								});
 							
-							force.on("tick", function() {
+							force.on("tick", function(d) {
 								link.attr("x1", function(d) { return d.source.x; })
 									.attr("y1", function(d) { return d.source.y; })
 									.attr("x2", function(d) { return d.target.x; })
