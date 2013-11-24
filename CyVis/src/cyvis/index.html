@@ -179,6 +179,7 @@ div.tooltip {
 								.attr("class", "node")
 								.attr("r", 10)
 								.style("fill", function(d) { return color(d.OS); })
+								//.on("mouseover", function(){return color("red"); }) //doesn't work
 								.call(force.drag);
 
 							var tip = d3.select("body").append("div")   
@@ -190,7 +191,8 @@ div.tooltip {
 								.style("opacity", 0);
 
 							/* on click, pop up a larger menu with colored dots related to service vulnerability*/
-							node.on("mouseover", function(d) {      
+							node.on("mouseover", function(d) {
+									d3.select(this).transition().duration(200).style("stroke", "red")
 									tip.transition()        
 										.duration(200)      
 										.style("opacity", 1.0);     
@@ -201,14 +203,21 @@ div.tooltip {
 											)  
 										.style("left", (d3.event.pageX) + "px")     
 										.style("top", (d3.event.pageY - 28) + "px");    
-								})                  
-								.on("mouseout", function(d) {       
+								})
+								.on("mouseout", function(d){
+									//d3.select(this).transition().duration(200).style("fill", function(d) { return color(d.OS); })
+								})
+								.on("mouseout", function(d) {
+									d3.select(this).transition().duration(200).style("stroke", "white")								
 									tip.transition()        
 										.duration(500)      
 										.style("opacity", 0);   
 								})
 								.on("dblclick",function(d){
 								//stuff... maybe undo the "click"
+									d3.select(this).transition().duration(200)
+										.attr("r", 10)
+										.style("fill", function(d) { return color(d.OS); })
 									tip.transition()
 										.duration(200)
 										.style("opacity", 1)
@@ -219,6 +228,9 @@ div.tooltip {
 
 								})
 								.on("click", function(d) {
+									d3.select(this).transition().duration(200)
+										.attr("r",25)
+										.style("fill", "red")
 									tip.transition()
 										.duration(200)
 										.style("opacity", 0)
@@ -234,7 +246,7 @@ div.tooltip {
 													"more to come..." + "<br/>"
 												)
 										.style("left", (d3.event.pageX) + "px")     
-										.style("top", (d3.event.pageY - 38) + "px");    
+										.style("top", (d3.event.pageY - 28) + "px");    
 								});
 							
 							force.on("tick", function(d) {
