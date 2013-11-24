@@ -93,27 +93,28 @@ div.bigtip {
   width: 200px;                  
   height: 180px;                 
   padding: 2px;             
-  font: 12px sans-serif;        
-  background: white;   
-  border: 1px;      
-  border-radius: 1px;           
+  font: 12px calibri;        
+  background:aliceblue;   
+  border: 3px;      
+  border-radius: 8px;           
   border-style:solid;
-  border-color:black;
+  border-color:powderblue;
   pointer-events: none;         
 }
 
-div.tooltip {   
+div.tooltip {
+  visibility: hidden;
   position: absolute;           
   text-align: center;           
-  width: 80px;                  
-  height: 28px;                 
+  width: 100px;                  
+  height: 30px;                 
   padding: 2px;             
-  font: 12px sans-serif;        
-  background: white;   
-  border: 1px;      
-  border-radius: 1px;           
-  border-style:solid;
-  border-color:black;
+  font: 12px calibri;        
+  background: aliceblue;   
+  border: 3px;      
+  border-radius: 8px;           
+  border-style: solid;
+  border-color: powderblue;
   pointer-events: none;         
 }
 </style>
@@ -130,7 +131,7 @@ div.tooltip {
 	 <ul>
 	
         <li><a href="home.html" >Home</a></li>
-        <li><a href="index.html">App</a></li>
+        <li><a href="index.html"><b><font color="black"">App</font></b></a></li>
         <li><a href="about.html">About</a></li>
      </ul>
    
@@ -193,7 +194,11 @@ div.tooltip {
 									tip.transition()        
 										.duration(200)      
 										.style("opacity", 1.0);     
-									tip.html(  d.Address + "<br/>" + d.OS + "<br/>")  
+									tip.html(  
+												d.Address + "<br/>" + 
+												d.OS + "<br/>"
+									
+											)
 										.style("left", (d3.event.pageX) + "px")     
 										.style("top", (d3.event.pageY - 28) + "px");    
 								})                  
@@ -201,7 +206,14 @@ div.tooltip {
 									tip.transition()        
 										.duration(500)      
 										.style("opacity", 0);   
-								})/*
+								})
+								.on("dblclick",function(d){
+								//stuff... maybe undo the "click" stuff
+									bigtip.transition()
+										.duration(200)
+										.style("opacity", 0)
+										.style("visibility", "hidden");
+								})
 								.on("click", function(d) {
 									tip.transition()
 										.duration(200)
@@ -209,15 +221,17 @@ div.tooltip {
 									bigtip.transition()
 										.duration(200)
 										.style("opacity", 1.0)
+										.style("visibility", "visible");
 									bigtip.html( 
 													"IP: " + d.Address + "<br/>" +	
 													"OS: " + d.OS + "<br/>" + 
 													"# of Open Ports: " + d.OpenPorts + "<br/>" + 
-													"Ports: " + d.Ports	
+													"Ports: " + d.Ports	+ "<br/>" +
+													"more to come..." + "<br/>"
 												)
 										.style("left", (d3.event.pageX) + "px")     
 										.style("top", (d3.event.pageY - 38) + "px");    
-								})*/;
+								});
 							
 							force.on("tick", function() {
 								link.attr("x1", function(d) { return d.source.x; })
