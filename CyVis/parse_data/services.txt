@@ -1,0 +1,14 @@
+Joomla
+MySQL
+SQL Server
+PostgreSQL
+Firefox
+Internet Explorer
+Chrome
+Outlook Express
+Adobe Acrobat
+Adobe Reader
+Drupal
+Windows XP
+Windows NT
+Mac OS X
