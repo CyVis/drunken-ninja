@@ -1,15 +1,90 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<title>CyVis Network Visualization</title>
-<style>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>CyVis - App</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<title>Untitled Document</title>
+<style type="text/css">
+#header {
+	font-size: 36px;
+	background-color: #F90;
+	font-weight: bold;
+	color: #FFF;
+	vertical-align: middle;
+	text-align: center;
+	padding: 5px;
+	border-radius: 15px;
+	margin: 0px;
+}
+#body {
 
+}
+li {
+	font-size: 18px;
+	color: #FFF;
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+	text-align: left;
+}
+#side_panel {
+	font-size: 18px;
+	color: #FFF;
+	height: 100%;
+	width: 150px;
+	background-color: #F90;
+	padding: 5px;
+	margin-top: 0px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-left: 0px;
+	border-radius: 15px;
+	float: left;
+}
+#middle {
+	height: 800px;
+	width: 100%;
+}
+#footer {
+	clear:both;
+	font-size: 16px;
+	background-color: #F90;
+	padding: 10px;
+	margin-top: 5px;
+	color: #FFF;
+	border-radius: 15px;
+	text-align: center;
+}
+#model {
+	background-color: #CCC;
+	padding: 5px;
+	height: 100%;
+	width: auto;
+	border-radius: 15px;
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-left: 165px;
+	
+}
+a {
+	font-size: 24px;
+	color: #FFF;
+	font-style: normal;
+	text-decoration: none;
+	text-align: center;
+	margin: 5px;
+	padding: 5px;
+	list-style-type: none;
+}
 .node {
   stroke: #fff;
   stroke-width: 1.5px;
 }
 
 .link {
-  stroke: #999;
+  stroke: black;
   stroke-opacity: .6;
 }
 div.bigtip {
@@ -41,107 +116,133 @@ div.tooltip {
   border-color:black;
   pointer-events: none;         
 }
-
-
 </style>
-<body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script>
+</head>
 
-  var width = 500,
-      height = 500;
+<body id="body">
 
-  var color = d3.scale.category20();
+<div id="header">CyVis Network Visualization
+</div>
 
-  var force = d3.layout.force()
-      .charge(-200)
-      .linkDistance(80)
-      .size([width, height]);
+<div id="middle">
+   <div id="side_panel">
+   
+	 <ul>
+	
+        <li><a href="home.html" >Home</a></li>
+        <li><a href="index.html">App</a></li>
+        <li><a href="about.html">About</a></li>
+     </ul>
+   
+ </div>
+   <div class="cont" id="model" >
+	<H1>Let's look at our network...</H1>
+	<p>If at any time the data file is updated, just reload the page.</p>
+   <script>
+						var width  = 725;
+						var height = 680;
 
-  var tooltip = d3.select("body")
-                          .append("div")
-                          .style("position", "absolute")
-                          .style("z-index", "10")
-                          .style("visibility", "hidden")
-                          .text("");
-                  
-  var svg = d3.select("body").append("svg")
-      .attr("width", width)
-      .attr("height", height);
+						var color = d3.scale.category20();
 
-  d3.json("nodes_links.json", function(error, graph) {
-    force
-        .nodes(graph.nodes)
-        .links(graph.links)
-        .start();
+						var force = d3.layout.force()
+							.charge(-1000)
+							.linkDistance(80)
+							.size([width, height]);
 
+						var tooltip = d3.select("body")
+							.append("div")
+							.style("position", "absolute")
+							.style("z-index", "10")
+							.style("visibility", "hidden")
+							.text("");
+										  
+						var svg = d3.select(".cont").append("svg")
+							.attr("width", width)
+							.attr("height", height);
 
-  var link = svg.selectAll(".link")
-      .data(graph.links)
-    .enter().append("line")
-      .attr("class", "link")
-      .style("stroke-width", function(d) { return Math.sqrt(d.vulnerability); });
+						d3.json("nodes_links.json", function(error, graph) {
+							force
+								.nodes(graph.nodes)
+								.links(graph.links)
+								.start();
+							
+							var link = svg.selectAll(".link")
+								.data(graph.links)
+								.enter().append("line")
+								.attr("class", "link")
+								.style("stroke-width", function(d) { return Math.sqrt(d.vulnerability); });
 
-  var node = svg.selectAll(".node")
-      .data(graph.nodes)
-    .enter().append("circle")
-      .attr("class", "node")
-      .attr("r", 10)
-      .style("fill", function(d) { return color(d.OS); })
-      .call(force.drag);
+							var node = svg.selectAll(".node")
+								.data(graph.nodes)
+								.enter().append("circle")
+								.attr("class", "node")
+								.attr("r", 10)
+								.style("fill", function(d) { return color(d.OS); })
+								.call(force.drag);
 
-  var tip = d3.select("body").append("div")   
-      .attr("class", "tooltip")               
-      .style("opacity", 0);
+							var tip = d3.select("body").append("div")   
+								.attr("class", "tooltip")               
+								.style("opacity", 0);
 
-  var bigtip = d3.select("body").append("div")   
-      .attr("class", "bigtip")               
-      .style("opacity", 0);
+							var bigtip = d3.select("body").append("div")   
+								.attr("class", "bigtip")               
+								.style("opacity", 0);
 
-/* on click, pop up a larger menu with colored dots related to service vulnerability*/
-  node.on("mouseover", function(d) {      
-              tip.transition()        
-                  .duration(200)      
-                  .style("opacity", 1.0);     
-              tip.html(  d.Address + "<br/>" + d.OS + "<br/>")  
-                  .style("left", (d3.event.pageX) + "px")     
-                  .style("top", (d3.event.pageY - 28) + "px");    
-              })                  
-          .on("mouseout", function(d) {       
-              tip.transition()        
-                  .duration(500)      
-                  .style("opacity", 0);   
-          })
+							/* on click, pop up a larger menu with colored dots related to service vulnerability*/
+							node.on("mouseover", function(d) {      
+									tip.transition()        
+										.duration(200)      
+										.style("opacity", 1.0);     
+									tip.html(  d.Address + "<br/>" + d.OS + "<br/>")  
+										.style("left", (d3.event.pageX) + "px")     
+										.style("top", (d3.event.pageY - 28) + "px");    
+								})                  
+								.on("mouseout", function(d) {       
+									tip.transition()        
+										.duration(500)      
+										.style("opacity", 0);   
+								})/*
+								.on("click", function(d) {
+									tip.transition()
+										.duration(200)
+										.style("opacity", 0)
+									bigtip.transition()
+										.duration(200)
+										.style("opacity", 1.0)
+									bigtip.html( 
+													"IP: " + d.Address + "<br/>" +	
+													"OS: " + d.OS + "<br/>" + 
+													"# of Open Ports: " + d.OpenPorts + "<br/>" + 
+													"Ports: " + d.Ports	
+												)
+										.style("left", (d3.event.pageX) + "px")     
+										.style("top", (d3.event.pageY - 38) + "px");    
+								})*/;
+							
+							force.on("tick", function() {
+								link.attr("x1", function(d) { return d.source.x; })
+									.attr("y1", function(d) { return d.source.y; })
+									.attr("x2", function(d) { return d.target.x; })
+									.attr("y2", function(d) { return d.target.y; });
 
-          .on("click", function(d) {
-            tip.transition()
-              .duration(200)
-              .style("opacity", 0)
-            bigtip.transition()
-              .duration(200)
-              .style("opacity", 1.0)
-            bigtip.html( d.OS + "<br/>" + d.Address)
-              .style("left", (d3.event.pageX) + "px")     
-              .style("top", (d3.event.pageY - 38) + "px");    
-          });
-          
-
-    force.on("tick", function() {
-      link.attr("x1", function(d) { return d.source.x; })
-          .attr("y1", function(d) { return d.source.y; })
-          .attr("x2", function(d) { return d.target.x; })
-          .attr("y2", function(d) { return d.target.y; });
-
-      node.attr("cx", function(d) { return d.x; })
-          .attr("cy", function(d) { return d.y; });
-    });
-    d3.on("click", function(d) {
-      bigtip.transition()
-        .duration(200)
-        .style("opacity", 0)
-    });
-  });
-
+								node.attr("cx", function(d) { return d.x; })
+									.attr("cy", function(d) { return d.y; });
+							});
+							
+							d3.on("click", function(d) {
+								bigtip.transition()
+								.duration(200)
+								.style("opacity", 0)
+							});
+						});	
 
 </script>
+   </div>
+</div>
 
+<div id="footer"> The University of Tennessee - EECS Dept.
+<br />Data Visulization  Fall 2013
+</div>
+
+</body>
+</html>
