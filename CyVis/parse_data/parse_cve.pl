@@ -1,5 +1,6 @@
 use strict;
 use warnings;
+use Data::Dumper;
 #usage: ./parse.pl cve_file services_file begin_year end_year
 if ($#ARGV < 3) {
   printf "usage: perl parse.pl cve_file services_file begin_year end_year\n";
@@ -33,9 +34,11 @@ my %service_hash = ();
 my $biggest_count = 0;
 foreach my $service (@services) {
   chomp($service);
+  my @service_tokens = split(/,/,$service);
+
   my $count = 0;
   foreach my $line (@lines) {
-    if ($line =~ m/$service/) {
+    if ($line =~ m/$service_tokens[0]/) {
       printf OUT ("%s",$line);
       $count++;
     }
@@ -43,17 +46,24 @@ foreach my $service (@services) {
   if ($count > $biggest_count) {
     $biggest_count = $count;
   }
-  $service_hash{ $service } = $count;
+  my @a = ($count,$service_tokens[1]);
+  $service_hash{ $service_tokens[0] } = \@a;
 }
 `rm pre_service_filter.out`;
 
 #have a hash map that counts occurences
 
-printf CLEAN ("service,cve_count,risk\n");
+printf CLEAN ("service,cve_count,port_num,risk\n");
 for my $key (keys %service_hash) {
-  my $c = $service_hash{$key};
+  my $ref = $service_hash{$key};
+  my @arr = @$ref;
+  my @li = $service_hash{$key};
+  #print "arr[0]: $arr[0]\n";
+  my $c = $arr[0];
+  my $port = $arr[1];
+  #print "port $port";
   my $risk = $c / $biggest_count;
-  printf CLEAN ("%s,%d,%2f\n", $key, $c, $risk);
+  printf CLEAN ("%s,%d,%d,%2f\n", $key, $c, $port,$risk);
 }
 
 close(OUT);
