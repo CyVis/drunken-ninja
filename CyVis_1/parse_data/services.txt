@@ -1,0 +1,17 @@
+Joomla,17839
+MySQL,66
+SQL Server,68
+PostgreSQL,65
+Firefox,23843
+Internet Explorer,23834
+Chrome,23835
+Outlook Express,12653
+Adobe Acrobat,19822
+Adobe Reader,19823
+Drupal,12000
+Windows XP, 0
+Windows NT, 0
+Mac OS X, 0
+Spotify, 414
+iTunes, 16708
+GitHub, 1959

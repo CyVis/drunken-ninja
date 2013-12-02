@@ -1,0 +1,18 @@
+service,cve_count,port_num,risk
+Adobe Acrobat,0,19822,0.000000
+Windows XP,81,0,0.476471
+Mac OS X,156,0,0.917647
+Firefox,141,23843,0.829412
+Joomla,12,17839,0.070588
+Spotify,0,414,0.000000
+SQL Server,27,68,0.158824
+Chrome,170,23835,1.000000
+PostgreSQL,8,65,0.047059
+MySQL,61,66,0.358824
+Drupal,70,12000,0.411765
+Internet Explorer,127,23834,0.747059
+Adobe Reader,65,19823,0.382353
+GitHub,0,1959,0.000000
+Outlook Express,0,12653,0.000000
+iTunes,22,16708,0.129412
+Windows NT,0,0,0.000000
