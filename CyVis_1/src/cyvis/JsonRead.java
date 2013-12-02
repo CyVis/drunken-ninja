@@ -30,12 +30,12 @@ public class JsonRead {
  
 	try {
  
-		//Object obj = parser.parse(new FileReader("c:\\test.json")); //for windows
-                Object obj = parser.parse(new FileReader("/Users/jrs/nodes_links.json")); //for mac
+		//Object obj = parser.parse(new FileReader("c:\\nodes_links.json")); //for windows
+                Object node = parser.parse(new FileReader("/Users/jrs/nodes_links.json")); //for mac
  
-		JSONObject jsonObject = (JSONObject) obj;
+		JSONObject jsonObject = (JSONObject) node;
  
-		String address = (String) jsonObject.get("address");
+		String address = (String) jsonObject.get("IP");
                 System.out.print("IP: ");
 		System.out.println(address);
                 
@@ -43,12 +43,12 @@ public class JsonRead {
                 System.out.print("OS: ");
 		System.out.println(os);
  
-		long Open_Ports = (Long) jsonObject.get("Open_Ports");
+		Integer Open_Ports = (Integer) jsonObject.get("Open_Ports");
                 System.out.print("Open Ports: ");
 		System.out.println(Open_Ports);
                                 
 		// loop array
-		JSONArray ports = (JSONArray) jsonObject.get("Ports");
+		JSONArray ports = (JSONArray) jsonObject.get("Port");
 		Iterator<String> portiterator = ports.iterator();
 		while (portiterator.hasNext()) {
 			System.out.println(portiterator.next());
@@ -56,7 +56,7 @@ public class JsonRead {
                 
                 System.out.println("Services: ");
                 
-                JSONArray services = (JSONArray) jsonObject.get("Services");
+                JSONArray services = (JSONArray) jsonObject.get("Service");
 		Iterator<String> serviceiterator = services.iterator();
 		while (serviceiterator.hasNext()) {
 			System.out.println(serviceiterator.next());

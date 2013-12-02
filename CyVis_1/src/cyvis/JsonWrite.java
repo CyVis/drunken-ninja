@@ -21,13 +21,8 @@ import org.json.simple.JSONObject;
 public class JsonWrite {
      public static void main(String[] args) {
  
-	JSONObject obj = new JSONObject();
-	obj.put("address", "192.168.1.0");
-        obj.put("Open_Ports", new Integer(3));
-        obj.put("Ports", "p1 | p2 | p3");
-        obj.put("Services", "s1 | s2 | s3");
-        obj.put("OS", "Macintosh");
-        
+        Integer y = 3; 
+         
         JSONArray portlist = new JSONArray();
 	portlist.add("p1");
 	portlist.add("p2");
@@ -36,19 +31,20 @@ public class JsonWrite {
         JSONArray servicelist = new JSONArray();
 	servicelist.add("s1");
 	servicelist.add("s2");
-	servicelist.add("s3");
-        
-
- 
-        obj.put("Ports", portlist);
-	obj.put("Services", servicelist);
+	servicelist.add("s3"); 
+         
+        JSONObject node = new JSONObject();
+	node.put("IP", "192.168.1.0");
+        node.put("OS", "Macintosh"); 
+        node.put("Open_Ports:", y);
+        node.put("Port", portlist);
+        node.put("Service", servicelist);
         
  
 	try {
- 
-		//FileWriter file = new FileWriter("c:\\nodes_links.json"); //for windows
+ 		//FileWriter file = new FileWriter("c:\\nodes_links.json"); //for windows
                 FileWriter file = new FileWriter("/Users/jrs/nodes_links.json"); //for mac
-		file.write(obj.toJSONString());
+		file.write(node.toJSONString());
 		file.flush();
 		file.close();
  
@@ -56,12 +52,11 @@ public class JsonWrite {
 		e.printStackTrace();
 	}
  
-	System.out.print(obj);
+	System.out.print(node);
  
      }
  
 }
-
 
 /**
  * {
