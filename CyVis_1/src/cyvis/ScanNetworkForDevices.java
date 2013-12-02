@@ -239,7 +239,7 @@ public class ScanNetworkForDevices implements Runnable
 
 
 				if (!line.contains("MAC Address:") && onset == 2) { 
-					System.out.println("HEY") ; 
+					System.out.println(networkingInfo.networkDevices.size()) ; 
 					onset = 3 ; 
 				}
 
