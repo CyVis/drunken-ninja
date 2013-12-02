@@ -9,7 +9,9 @@ package cyvis;
 /**
  *
  * @author jrs
+ * Ref: http://www.mkyong.com/java/json-simple-example-read-and-write-json/
  * see https://code.google.com/p/json-simple/
+ * notice there is a new json-simple.jar file in the Libraries section of the project.
  */
 import java.io.FileWriter;
 import java.io.IOException;
