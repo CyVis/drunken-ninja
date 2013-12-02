@@ -176,6 +176,7 @@ public final class MainWindowFrame extends javax.swing.JFrame {
     scanButton = new javax.swing.JButton();
     stopScanning_button = new javax.swing.JButton();
     testButton = new javax.swing.JButton();
+    createJSON_button = new javax.swing.JButton();
     jMenuBar1 = new javax.swing.JMenuBar();
     menuBar = new javax.swing.JMenu();
     jMenu2 = new javax.swing.JMenu();
@@ -234,6 +235,15 @@ public final class MainWindowFrame extends javax.swing.JFrame {
       }
     });
 
+    createJSON_button.setText("Create JSON");
+    createJSON_button.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        createJSON_buttonActionPerformed(evt);
+      }
+    });
+
     menuBar.setText("File");
     jMenuBar1.add(menuBar);
 
@@ -282,9 +292,11 @@ public final class MainWindowFrame extends javax.swing.JFrame {
             .addComponent(jLabel1)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(addr_label, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(testButton)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(createJSON_button)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(scanButton)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(stopScanning_button, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -301,7 +313,8 @@ public final class MainWindowFrame extends javax.swing.JFrame {
           .addComponent(addr_label)
           .addComponent(scanButton)
           .addComponent(stopScanning_button)
-          .addComponent(testButton))
+          .addComponent(testButton)
+          .addComponent(createJSON_button))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -388,6 +401,13 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 		notifications.append(String.valueOf(networkingInfo.networkDevices.size()));
   }//GEN-LAST:event_testButtonActionPerformed
 
+  private void createJSON_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_createJSON_buttonActionPerformed
+  {//GEN-HEADEREND:event_createJSON_buttonActionPerformed
+    // TODO add your handling code here:
+		WriteDataToDisk wd = new WriteDataToDisk(networkingInfo); 
+		wd.doAction() ; 
+  }//GEN-LAST:event_createJSON_buttonActionPerformed
+
 
 	// Nothing to see here, really...
 	public static void main(String args[]) {
@@ -458,6 +478,7 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public javax.swing.JLabel addr_label;
+  private javax.swing.JButton createJSON_button;
   public javax.swing.JMenu defaultConnectionJMenu;
   private javax.swing.JMenuItem defaultIPBaseAddr;
   private javax.swing.JList deviceList;

@@ -89,9 +89,11 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="addr_label" min="-2" pref="136" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="testButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="createJSON_button" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="scanButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="stopScanning_button" min="-2" pref="119" max="-2" attributes="0"/>
@@ -113,6 +115,7 @@
                   <Component id="scanButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="stopScanning_button" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="testButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="createJSON_button" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" pref="195" max="-2" attributes="0"/>
@@ -202,6 +205,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="testButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="createJSON_button">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Create JSON"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createJSON_buttonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
