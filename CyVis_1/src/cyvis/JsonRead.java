@@ -11,7 +11,7 @@ package cyvis;
  * @author jrs
  * Ref: http://www.mkyong.com/java/json-simple-example-read-and-write-json/
  * see https://code.google.com/p/json-simple/
- * notice there is a new json-simple.jar file in the Libraries section of the project.
+ * json-simple.jar file needs to be imported into the Libraries section of the project.
  */
 
 import java.io.FileNotFoundException;
@@ -23,7 +23,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
  
-public class JsonReadSimpleExample {
+public class JsonRead {
      public static void main(String[] args) {
  
 	JSONParser parser = new JSONParser();
@@ -36,20 +36,25 @@ public class JsonReadSimpleExample {
 		JSONObject jsonObject = (JSONObject) obj;
  
 		String address = (String) jsonObject.get("address");
+                System.out.print("IP: ");
 		System.out.println(address);
                 
                 String os = (String) jsonObject.get("OS");
+                System.out.print("OS: ");
 		System.out.println(os);
  
 		long Open_Ports = (Long) jsonObject.get("Open_Ports");
+                System.out.print("Open Ports: ");
 		System.out.println(Open_Ports);
- 
+                                
 		// loop array
 		JSONArray ports = (JSONArray) jsonObject.get("Ports");
 		Iterator<String> portiterator = ports.iterator();
 		while (portiterator.hasNext()) {
 			System.out.println(portiterator.next());
 		}
+                
+                System.out.println("Services: ");
                 
                 JSONArray services = (JSONArray) jsonObject.get("Services");
 		Iterator<String> serviceiterator = services.iterator();
