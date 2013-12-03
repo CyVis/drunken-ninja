@@ -34,9 +34,10 @@ li {
 	border-radius: 15px;
 	float: left;
 }
+
 #middle {
 	height: 800px;
-	width: 80%;
+	width: 100%;
 }
 #footer {
 	clear:both;
@@ -54,29 +55,29 @@ li {
 	height: 100%;
 	width: 100%; /*800px;*/
 	border-radius: 15px;
-	margin-top: 5px;
+	/*margin-top: 5px;
 	margin-right: 5px;
 	margin-bottom: 5px;
-	margin-left: 165px;	
+	margin-left: 165px;*/
 }
 
 #model_spaceL{
 	/*height: 500px;
 	width:  600px;*/
-	height: 800px;
-	width: 600px;
+	height: 100%;
+	width: 80%;
 	float: left;
 	margin-top: 5px;
 	margin-right: 5px;
 	margin-bottom: 5px;
-	margin-left: 5px;
+	margin-left: 5px
 }
 
 
 #model_spaceR{
 	height: 200px;
-	width:  200px;
-	float: right;
+	width:  100px;
+	float: left;
 }
 
 
