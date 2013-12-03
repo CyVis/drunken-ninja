@@ -37,9 +37,9 @@
 	  "OS":"windows"
 	},
 	{ "Address":"192.168.1.6",
-	  "Open_Ports":3,
-	  "Ports":"1 | 2 | 3",
-	  "Services":"s1 | s2 | s3",
+	  "Open_Ports":4,
+	  "Ports":"1 | 2 | 3 | 4",
+	  "Services":"s1 | s2 | s3 | s4",
 	  "OS":"macintosh"
 	},
 	{ "Address":"192.168.1.7",

@@ -7,9 +7,9 @@
 	  "OS":"macintosh"
 	},
 	{ "Address":"192.168.1.1",
-	  "Open_Ports":3,
-	  "Ports":"1 | 2 | 3",
-	  "Services":"s1 | s2 | s3",
+	  "Open_Ports":4,
+	  "Ports":"1 | 2 | 3 | 4",
+	  "Services":"s1 | s2 | s3 | 4",
 	  "OS":"macintosh"
 	},
 	{ "Address":"192.168.1.2",
@@ -32,8 +32,8 @@
 	},
 	{ "Address":"192.168.1.5",
 	  "Open_Ports":3,
-	  "Ports":"1 | 2 | 3",
-	  "Services":"s1 | s2 | s3",
+	  "Ports":"1 | 2 | 3 | 4",
+	  "Services":"s1 | s2 | s3 | 4",
 	  "OS":"windows"
 	},
 	{ "Address":"192.168.1.6",
@@ -104,14 +104,14 @@
 	},
 	{ "Address":"192.168.1.17",
 	  "Open_Ports":3,
-	  "Ports":"1 | 2 | 3",
-	  "Services":"s1 | s2 | s3",
+	  "Ports":"1 | 2",
+	  "Services":"s1 | s2",
 	  "OS":"linux"
 	},
 	{ "Address":"192.168.1.18",
 	  "Open_Ports":3,
-	  "Ports":"1 | 2 | 3",
-	  "Services":"s1 | s2 | s3",
+	  "Ports":"1 | 2 | 3 | 4",
+	  "Services":"s1 | s2 | s3 | s4",
 	  "OS":"macintosh"
 	}	
 

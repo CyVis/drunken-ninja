@@ -26,8 +26,8 @@
 	},
 	{ "Address":"192.168.1.4",
 	  "Open_Ports":2,
-	  "Ports":"2 | 3",
-	  "Services":"s2 | s3",
+	  "Ports":"2 | 3 | 4",
+	  "Services":"s2 | s3 | s4",
 	  "OS":"linux"
 	},
 	{ "Address":"192.168.1.5",
