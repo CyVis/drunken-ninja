@@ -36,7 +36,7 @@ public class JsonWrite {
         JSONObject node = new JSONObject();
 	node.put("IP", "192.168.1.0");
         node.put("OS", "Macintosh"); 
-        node.put("Open_Ports:", y);
+        node.put("Open_Ports:", (y));
         node.put("Port", portlist);
         node.put("Service", servicelist);
         

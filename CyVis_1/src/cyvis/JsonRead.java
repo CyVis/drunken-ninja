@@ -42,8 +42,8 @@ public class JsonRead {
                 String os = (String) jsonObject.get("OS");
                 System.out.print("OS: ");
 		System.out.println(os);
- 
-		Integer Open_Ports = (Integer) jsonObject.get("Open_Ports");
+ 		
+                Integer Open_Ports = (Integer) jsonObject.get("Open_Ports");
                 System.out.print("Open Ports: ");
 		System.out.println(Open_Ports);
                                 
