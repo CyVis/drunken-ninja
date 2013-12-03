@@ -32,25 +32,16 @@
     .attr("class", "link")
     .style("stroke-width", function(d) { return Math.sqrt(d.vulnerability); });
 
+  var expected_ports = [1,2];
   var node = svg.selectAll(".node")
     .data(graph.nodes)
     .enter().append("circle")
     .attr("class", "node")
     .attr("r", 10)
     //.style("fill", function(d) { return color(d.Open_Ports); })
-	.style("fill", function(d) { 	
-		_.difference(d.Ports.split("|"),[1, 2]);
-		var a=[], diff=[];
-		for(var i=0;i<a1.length;i++)
-		a[a1[i]]=true;
-		for(var i=0;i<a2.length;i++)
-		if(a[a2[i]]) delete a[a2[i]];
-		else a[a2[i]]=true;
-		for(var k in a)
-		diff.push(k);
-		return diff;
-		
-		; })
+      .style("fill", function(d) { 
+          return getColorByPorts(d.Ports.split("|"),expected_ports);	
+    ; })
     //.on("mouseover", function(){return color("red"); }) //doesn't work
     .call(force.drag);
 
@@ -89,7 +80,8 @@
     //stuff... maybe undo the "click"
     d3.select(this).transition().duration(200)
     .attr("r", 10)
-    .style("fill", function(d) { return color(d.OS); })
+    //.style("fill", function(d) { return color(d.OS); })
+    .style("fill", function(d) {return getColorByPorts(d.Ports.split("|"),expected_ports);})	
     tip.transition()
     .duration(200)
     .style("opacity", 1)
@@ -137,4 +129,23 @@
     .style("opacity", 0)
   });
 });
+
+function getColorByPorts(a1,a2) {
+  a3 = [];
+  colr = "";
+  for (i = 0; i < a1.length; i++) {
+    if (a2.indexOf(parseInt(a1[i])) == -1) {
+      a3.push(a1[i]);
+    }
+  }
+  if (a3.length > 0) {
+    colr = "#d62728"//"red";
+  }
+  else {
+    colr = "#1f77b4"//"blue";
+  }
+  return colr; 
+//return "red";
+}
+
 })();
