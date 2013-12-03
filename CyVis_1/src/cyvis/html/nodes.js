@@ -1,5 +1,5 @@
 (function() {
-    var width  = 800;
+    var width  = 900;
     var height = 680;
 
     var color = d3.scale.category20();
@@ -37,7 +37,20 @@
     .enter().append("circle")
     .attr("class", "node")
     .attr("r", 10)
-    .style("fill", function(d) { return color(d.OS); })
+    //.style("fill", function(d) { return color(d.Open_Ports); })
+	.style("fill", function(d) { 	
+		_.difference(d.Ports.split("|"),[1, 2]);
+		var a=[], diff=[];
+		for(var i=0;i<a1.length;i++)
+		a[a1[i]]=true;
+		for(var i=0;i<a2.length;i++)
+		if(a[a2[i]]) delete a[a2[i]];
+		else a[a2[i]]=true;
+		for(var k in a)
+		diff.push(k);
+		return diff;
+		
+		; })
     //.on("mouseover", function(){return color("red"); }) //doesn't work
     .call(force.drag);
 
@@ -98,14 +111,14 @@
     .style("opacity", 1.0)
     .style("visibility", "visible");
   bigtip.html( 
-    "IP: " + d.Address + "<br/>" +	
-    "OS: " + d.OS + "<br/>" + 
-    "# of Open Ports: " + d.OpenPorts + "<br/>" + 
-    "Ports: " + d.Ports.split("|")[0]	+ "<br/>" +
-    "more to come..." + "<br/>"
-    )
-    .style("left", (d3.event.pageX) + "px")     
-    .style("top", (d3.event.pageY - 28) + "px");    
+				"IP: " + d.Address + "<br/>" +	
+				"OS: " + d.OS + "<br/>" + 
+				"# of Open Ports: " + d.Open_Ports + "<br/>" + 
+				"Ports: " + d.Ports.split("|")	+ "<br/>" +
+				"more to come..." + "<br/>"
+				)
+				.style("left", (d3.event.pageX) + "px")     
+				.style("top", (d3.event.pageY - 28) + "px");    
   });
 
   force.on("tick", function(d) {
