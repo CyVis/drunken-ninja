@@ -133,28 +133,13 @@ div.tooltip {
 }
 
 
-
-.bar {
+.chart rect {
   fill: steelblue;
 }
 
-.bar:hover {
-  fill: brown;
-}
-
-.axis {
+.chart text {
+  fill: white;
   font: 10px sans-serif;
+  text-anchor: end;
 }
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-
 
