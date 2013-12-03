@@ -25,9 +25,9 @@
 	  "OS":"linux"
 	},
 	{ "Address":"192.168.1.4",
-	  "Open_Ports":1,
-	  "Ports":"1",
-	  "Services":"s1",
+	  "Open_Ports":3,
+	  "Ports":"1 | 2 | 3",
+	  "Services":"s1 | s2 | s3",
 	  "OS":"linux"
 	},
 	{ "Address":"192.168.1.5",
@@ -37,21 +37,21 @@
 	  "OS":"windows"
 	},
 	{ "Address":"192.168.1.6",
-	  "Open_Ports":1,
-	  "Ports":"1",
-	  "Services":"s1",
+	  "Open_Ports":3,
+	  "Ports":"1 | 2 | 3",
+	  "Services":"s1 | s2 | s3",
 	  "OS":"macintosh"
 	},
 	{ "Address":"192.168.1.7",
-	  "Open_Ports":2,
-	  "Ports":"1 | 2",
-	  "Services":"s1 | s2",
+	  "Open_Ports":3,
+	  "Ports":"1 | 2 | 3",
+	  "Services":"s1 | s2 | s3",
 	  "OS":"linux"
 	},
 	{ "Address":"192.168.1.8",
-	  "Open_Ports":2,
-	  "Ports":"1 | 2",
-	  "Services":"s1 | s2",
+	  "Open_Ports":3,
+	  "Ports":"1 | 2 | 3",
+	  "Services":"s1 | s2 | s3",
 	  "OS":"windows"
 	},
 	{ "Address":"192.168.1.9",
@@ -61,14 +61,14 @@
 	  "OS":"windows"
 	},
 	{ "Address":"192.168.1.10",
-	  "Open_Ports":1,
-	  "Ports":"3",
+	  "Open_Ports":3,
+	  "Ports":"1 | 2 | 3",
 	  "Services":"s1 | s2 | s3",
 	  "OS":"windows"
 	},
 	{ "Address":"192.168.1.11",
-	  "Open_Ports":1,
-	  "Ports":"3",
+	  "Open_Ports":3,
+	  "Ports":"1 | 2 | 3",
 	  "Services":"s1 | s2 | s3",
 	  "OS":"windows"
 	},
