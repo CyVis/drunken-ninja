@@ -20,7 +20,7 @@
     .attr("width", width)
     .attr("height", height);
 
-  d3.json("nodes_links.json", function(error, graph) {
+  d3.json("nodes_links3.json", function(error, graph) {
     force
     .nodes(graph.nodes)
     .links(graph.links)
