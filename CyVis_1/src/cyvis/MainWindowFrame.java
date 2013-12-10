@@ -113,6 +113,26 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 		scanningThread = new Thread(snd) ; 
 		scanningThread.start(); 
 	}
+
+	private void manualUpdate() {
+				DefaultListModel model = new DefaultListModel() ; 
+				deviceList.setModel(model);
+
+				try { 
+
+					int count = networkingInfo.networkDevices.size() ; 
+					String[] devices = new String[count] ; 
+					
+					for (int i = 0 ; i < networkingInfo.networkDevices.size(); i++) { 
+						NetworkDevice d = (NetworkDevice) networkingInfo.networkDevices.get(i); 
+						devices[i] = d.hostname + ", " + d.address; 
+//						model.add(i, d);
+							System.err.println("Adding hostname: " + d.hostname + ", address: " + d.address) ; 
+							model.addElement(devices[i]) ;
+					}
+				}
+				catch (Exception ex) { } 
+	}
 	private void updateList() { 
 		Runnable run ; 
 		run = new Runnable() {
@@ -142,8 +162,9 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 //						model.add(i, d);
 						if (!model.contains(devices[i])) 
 						{
-//							System.out.println("Adding hostname: " + d.hostname + ", address: " + d.address) ; 
+							System.err.println("Adding hostname: " + d.hostname + ", address: " + d.address) ; 
 							model.addElement(devices[i]) ;
+							
 						} 
 					}
 				}
@@ -163,8 +184,7 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 	
 	@SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-  private void initComponents()
-  {
+  private void initComponents() {
 
     jMenuItem1 = new javax.swing.JMenuItem();
     jLabel1 = new javax.swing.JLabel();
@@ -176,7 +196,7 @@ public final class MainWindowFrame extends javax.swing.JFrame {
     scanButton = new javax.swing.JButton();
     stopScanning_button = new javax.swing.JButton();
     testButton = new javax.swing.JButton();
-    createJSON_button = new javax.swing.JButton();
+    updateLIst_button = new javax.swing.JButton();
     jMenuBar1 = new javax.swing.JMenuBar();
     menuBar = new javax.swing.JMenu();
     jMenu2 = new javax.swing.JMenu();
@@ -199,48 +219,38 @@ public final class MainWindowFrame extends javax.swing.JFrame {
     jScrollPane1.setViewportView(notifications);
 
     deviceList.setBorder(new javax.swing.border.MatteBorder(null));
-    deviceList.addMouseListener(new java.awt.event.MouseAdapter()
-    {
-      public void mouseClicked(java.awt.event.MouseEvent evt)
-      {
+    deviceList.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
         deviceListMouseClicked(evt);
       }
     });
     jScrollPane2.setViewportView(deviceList);
 
     scanButton.setText("Start Scan");
-    scanButton.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    scanButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         scanButtonActionPerformed(evt);
       }
     });
 
     stopScanning_button.setText("Stop Scanning");
-    stopScanning_button.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    stopScanning_button.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         stopScanning_buttonActionPerformed(evt);
       }
     });
 
-    testButton.setText("Test");
-    testButton.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    testButton.setText("Create JSON");
+    testButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         testButtonActionPerformed(evt);
       }
     });
 
-    createJSON_button.setText("Create JSON");
-    createJSON_button.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
-        createJSON_buttonActionPerformed(evt);
+    updateLIst_button.setText("Update List");
+    updateLIst_button.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        updateLIst_buttonActionPerformed(evt);
       }
     });
 
@@ -250,10 +260,8 @@ public final class MainWindowFrame extends javax.swing.JFrame {
     jMenu2.setText("Edit");
 
     defaultIPBaseAddr.setLabel("Select Default Base IP");
-    defaultIPBaseAddr.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    defaultIPBaseAddr.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         defaultIPBaseAddrActionPerformed(evt);
       }
     });
@@ -268,10 +276,8 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 
     ipv6_menuItem.setSelected(true);
     ipv6_menuItem.setLabel("IPV6 Compatability Mode");
-    ipv6_menuItem.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    ipv6_menuItem.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         ipv6_menuItemActionPerformed(evt);
       }
     });
@@ -295,7 +301,7 @@ public final class MainWindowFrame extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(testButton)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(createJSON_button)
+            .addComponent(updateLIst_button)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(scanButton)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -314,7 +320,7 @@ public final class MainWindowFrame extends javax.swing.JFrame {
           .addComponent(scanButton)
           .addComponent(stopScanning_button)
           .addComponent(testButton)
-          .addComponent(createJSON_button))
+          .addComponent(updateLIst_button))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -399,14 +405,14 @@ public final class MainWindowFrame extends javax.swing.JFrame {
   {//GEN-HEADEREND:event_testButtonActionPerformed
     // TODO add your handling code here:
 		notifications.append(String.valueOf(networkingInfo.networkDevices.size()));
+		WriteDataToDisk wd = new WriteDataToDisk(networkingInfo); 
   }//GEN-LAST:event_testButtonActionPerformed
 
-  private void createJSON_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_createJSON_buttonActionPerformed
-  {//GEN-HEADEREND:event_createJSON_buttonActionPerformed
+  private void updateLIst_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_updateLIst_buttonActionPerformed
+  {//GEN-HEADEREND:event_updateLIst_buttonActionPerformed
     // TODO add your handling code here:
-		WriteDataToDisk wd = new WriteDataToDisk(networkingInfo); 
-		wd.doAction() ; 
-  }//GEN-LAST:event_createJSON_buttonActionPerformed
+		manualUpdate();
+  }//GEN-LAST:event_updateLIst_buttonActionPerformed
 
 
 	// Nothing to see here, really...
@@ -478,7 +484,6 @@ public final class MainWindowFrame extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public javax.swing.JLabel addr_label;
-  private javax.swing.JButton createJSON_button;
   public javax.swing.JMenu defaultConnectionJMenu;
   private javax.swing.JMenuItem defaultIPBaseAddr;
   private javax.swing.JList deviceList;
@@ -495,5 +500,6 @@ public final class MainWindowFrame extends javax.swing.JFrame {
   private javax.swing.JButton scanButton;
   private javax.swing.JButton stopScanning_button;
   private javax.swing.JButton testButton;
+  private javax.swing.JButton updateLIst_button;
   // End of variables declaration//GEN-END:variables
 }
